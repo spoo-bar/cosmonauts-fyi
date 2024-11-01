@@ -21,7 +21,7 @@ foreach ($url in $inputData.releases) {
             'Prerelease' = $release.prerelease
             'CreatedAt' = $release.created_at
             'PublishedAt' = $release.published_at
-            #'Assets' = $release.assets
+            'Assets' = $release.assets.browser_download_url -Join ', '
             'Body' = $release.body
             'AuthorName' = $release.author.UserName
             'AuthorAvatar' = $release.author.avatar_url
@@ -34,4 +34,4 @@ foreach ($url in $inputData.releases) {
 
 $jsonOutput = $formattedReleases | ConvertTo-Json
 Set-Content -Path $outputFilePath -Value $jsonOutput
-Write-Debug "Successfully formatted PRs to $outputFilePath"
+Write-Debug "Successfully formatted releases to $outputFilePath"

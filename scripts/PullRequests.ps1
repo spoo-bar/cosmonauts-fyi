@@ -14,8 +14,8 @@ foreach ($url in $inputData.pull_requests) {
         $formattedPRs += ([PSCustomObject]@{
             'URL' = $url
             'Number' = $pr.number
-            'Organization' = $organization
-            'Repository' = $repository
+            'Organization' = $matches[1]
+            'Repository' = $matches[2]
             'State' = $pr.state
             'Title' = $pr.title
             'Body' = $pr.body
