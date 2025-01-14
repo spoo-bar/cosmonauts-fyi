@@ -28,7 +28,7 @@ jobs:
           current_week=$(date +"%V")
           branch_name="year/$current_year/week/$current_week"
           git checkout -b $branch_name
-          git push origin $branch_name
+          git push --set-upstream origin $branch_name
 
       - name: Execute Fetch Data Script
         env:
