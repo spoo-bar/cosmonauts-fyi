@@ -1,0 +1,24 @@
+name: Fetch
+
+on:
+  workflow_dispatch: 
+
+jobs:
+  run-tests:
+    name: Fetch data
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v4
+      
+      - name: Execute Fetch Data Script
+        env:
+          BEARER_TOKEN: ${{ secrets.GITHUB_TOKEN}} 
+        shell: pwsh
+        run: |
+          echo $BEARER_TOKEN
+          ./scripts/FetchData.ps1
+
+      - name: Output data
+        run: |
+          cat ./2025/3/data.json
