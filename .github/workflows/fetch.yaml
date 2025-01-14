@@ -47,4 +47,4 @@ jobs:
           current_week=$(date +"%V")
           branch_name="year/$current_year/week/$current_week"
           title="Year: $current_year Week: $current_week"
-          gh pr create --title '$title' --body 'Created by Github action 🤖' --assignee spoo-bar --base main --head $branch_name --draft
+          gh pr create --title "$title" --body 'Created by Github action 🤖' --assignee spoo-bar --base main --head $branch_name --draft
