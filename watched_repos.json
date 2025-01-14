@@ -1,0 +1,341 @@
+[
+  {
+    "Organisation": "ignite",
+    "Repositories": [
+      {
+        "Name": "cli",
+        "About": ""
+      },
+      {
+        "Name": "modules",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "cosmos",
+    "Repositories": [
+      {
+        "Name": "cosmjs",
+        "About": ""
+      },
+      {
+        "Name": "chain-registry",
+        "About": ""
+      },
+      {
+        "Name": "cosmos-sdk",
+        "About": ""
+      },
+      {
+        "Name": "cosmos-rust",
+        "About": ""
+      },
+      {
+        "Name": "ibc",
+        "About": ""
+      },
+      {
+        "Name": "ibc-go",
+        "About": ""
+      },
+      {
+        "Name": "ibc-rs",
+        "About": ""
+      },
+      {
+        "Name": "relayer",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "cosmology-tech",
+    "Repositories": [
+      {
+        "Name": "telescope",
+        "About": ""
+      },
+      {
+        "Name": "chain-registry",
+        "About": ""
+      },
+      {
+        "Name": "create-cosmos-app",
+        "About": ""
+      },
+      {
+        "Name": "cosmos-kit",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "graz-sh",
+    "Repositories": [
+      {
+        "Name": "graz",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "fetchai",
+    "Repositories": [
+      {
+        "Name": "cosmpy",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "ctrl-Felix",
+    "Repositories": [
+      {
+        "Name": "mospy",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "CosmWasm",
+    "Repositories": [
+      {
+        "Name": "cosmwasm",
+        "About": ""
+      },
+      {
+        "Name": "cw-storage-plus",
+        "About": ""
+      },
+      {
+        "Name": "cw-multi-test",
+        "About": ""
+      },
+      {
+        "Name": "cw-minus",
+        "About": ""
+      },
+      {
+        "Name": "optimizer",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "peggyjv",
+    "Repositories": [
+      {
+        "Name": "ocular",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "ping-pub",
+    "Repositories": [
+      {
+        "Name": "explorer",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "eco-stake",
+    "Repositories": [
+      {
+        "Name": "cosmos-directory",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "blockpane",
+    "Repositories": [
+      {
+        "Name": "tenderduty",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "DefiantLabs",
+    "Repositories": [
+      {
+        "Name": "cosmos-indexer",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "turbofish-org",
+    "Repositories": [
+      {
+        "Name": "orga",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "strangelove-ventures",
+    "Repositories": [
+      {
+        "Name": "interchaintest",
+        "About": ""
+      },
+      {
+        "Name": "heighliner",
+        "About": ""
+      },
+      {
+        "Name": "cosmos-operator",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "informalsystems",
+    "Repositories": [
+      {
+        "Name": "hermes",
+        "About": ""
+      },
+      {
+        "Name": "tm-load-test",
+        "About": ""
+      },
+      {
+        "Name": "quint",
+        "About": ""
+      },
+      {
+        "Name": "cosmos.nix",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "confio",
+    "Repositories": [
+      {
+        "Name": "ts-relayer",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "crypto-com",
+    "Repositories": [
+      {
+        "Name": "python-iavl",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "apalache-mc",
+    "Repositories": [
+      {
+        "Name": "apalache",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "cosmosregistry",
+    "Repositories": [
+      {
+        "Name": "example",
+        "About": ""
+      },
+      {
+        "Name": "chain-minimal",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "rollchains",
+    "Repositories": [
+      {
+        "Name": "spawn",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "iqlusioninc",
+    "Repositories": [
+      {
+        "Name": "tmkms",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "larry0x",
+    "Repositories": [
+      {
+        "Name": "cw-plus-plus",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "mandrean",
+    "Repositories": [
+      {
+        "Name": "cw-optimizoor",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "osmosis-labs",
+    "Repositories": [
+      {
+        "Name": "beaker",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "AbstractSDK",
+    "Repositories": [
+      {
+        "Name": "cw-orchestrator",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "srdtrk",
+    "Repositories": [
+      {
+        "Name": "go-codegen",
+        "About": ""
+      }
+    ]
+  },
+  {
+    "Organisation": "cometbft",
+    "Repositories": [
+      {
+        "Name": "cometbft",
+        "About": ""
+      },
+      {
+        "Name": "cometbft-db",
+        "About": ""
+      },
+      {
+        "Name": "cometbft-rs",
+        "About": ""
+      },
+      {
+        "Name": "cometbft-load-test",
+        "About": ""
+      }
+    ]
+  }
+]

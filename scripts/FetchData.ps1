@@ -2,7 +2,7 @@ $year = Get-Date -Format "yyyy"
 $week = Get-Date -UFormat "%V"
 Write-Debug "Year: $year, Week: $week"
 
-$inputFilePath = "./watched_repos_test.json"
+$inputFilePath = "./watched_repos.json"
 $inputData = Get-Content -Path $inputFilePath -Raw | ConvertFrom-Json
 $outputFilePath = "./$year/$week/data.json"
 
@@ -13,6 +13,7 @@ $sevenDaysAgo = (Get-Date).AddDays(-7).ToString("yyyy-MM-ddTHH:mm:ssZ")
 $allPullrequests = @()
 $allIssues = @()
 $allReleases = @()
+$bearerToken = $env:BEARER_TOKEN
 
 foreach ($org in $inputData) {
     $organizationName = $org.Organisation
@@ -23,28 +24,17 @@ foreach ($org in $inputData) {
         Write-Output "  Repository: $repositoryName"
         $headers = @{
             "Accept" = "application/vnd.github.text+json"
+            "Authorization" = "Bearer $bearerToken"
         }
-
-        # # Fetch pull requests created in the last 7 days
-        # $url = "https://api.github.com/repos/$organizationName/$repositoryName/pulls?state=open&base=main"
-        # $response = Invoke-RestMethod -Uri $url -Method Get -Headers $headers        
-        # $recentPullRequests = $response | Where-Object {
-        #     $createdAt = [DateTime]::Parse($_.created_at)
-        #     ($currentDate - $createdAt).Days -le 7
-        # }
-        # $pullRequestUrls = $recentPullRequests | ForEach-Object { $_.html_url }
-        # $allPullrequests += $pullRequestUrls
         
         # Fetch issues created in the last 7 days
         $issuesUrl = "https://api.github.com/repos/$organizationName/$repositoryName/issues?state=all&since=$sevenDaysAgo&sort=updated&direction=desc&per_page=100"
         $issuesResponse = Invoke-RestMethod -Uri $issuesUrl -Method Get -Headers $headers
-        $recentIssues = $issuesResponse | Where-Object {
-            $createdAt = [DateTime]::Parse($_.created_at)
-            ($currentDate - $createdAt).Days -le 7
-        }
-        foreach ($issue in $recentIssues) {
+        foreach ($issue in $issuesResponse) {
             if ($issue.pull_request) {
-                $allPullrequests += $issue.html_url
+                if ($issue.user.login -ne "dependabot[bot]" -and $issue.user.login -ne "mergify[bot]") {
+                    $allPullrequests += $issue.html_url
+                }
             } else {
                 $allIssues += $issue.html_url
             }
@@ -77,3 +67,4 @@ if (-not (Test-Path -Path $outputDirectory)) {
 
 Set-Content -Path $outputFilePath -Value $outputJson
 Write-Debug "Successfully fetched data to $outputFilePath"
+
