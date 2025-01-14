@@ -49,6 +49,10 @@ foreach ($org in $inputData) {
         }
         $releaseUrls = $recentReleases | ForEach-Object { $_.html_url }
         $allReleases += $releaseUrls
+
+        Write-Output "    Pull Requests: $($allPullrequests.Count)"
+        Write-Output "    Issues: $($allIssues.Count)"
+        Write-Output "    Releases: $($allReleases.Count)"
     }
 }
 
@@ -66,5 +70,5 @@ if (-not (Test-Path -Path $outputDirectory)) {
 }
 
 Set-Content -Path $outputFilePath -Value $outputJson
-Write-Debug "Successfully fetched data to $outputFilePath"
+Write-Output "Successfully fetched data to $outputFilePath"
 

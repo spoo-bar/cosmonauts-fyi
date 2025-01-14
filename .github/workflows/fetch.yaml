@@ -16,7 +16,6 @@ jobs:
           BEARER_TOKEN: ${{ secrets.GITHUB_TOKEN}} 
         shell: pwsh
         run: |
-          echo $BEARER_TOKEN
           ./scripts/FetchData.ps1
 
       - name: Output data
