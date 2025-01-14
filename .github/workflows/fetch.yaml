@@ -16,6 +16,8 @@ jobs:
       
       - name: Create branch
         run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           current_year=$(date +"%Y")
           current_week=$(date +"%V")
           branch_name="year/$current_year/week/$current_week"
