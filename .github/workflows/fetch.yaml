@@ -20,4 +20,4 @@ jobs:
 
       - name: Output data
         run: |
-          cat ./2025/3/data.json
+          cat ./2025/03/data.json

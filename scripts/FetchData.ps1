@@ -1,6 +1,6 @@
 $year = Get-Date -Format "yyyy"
 $week = Get-Date -UFormat "%V"
-Write-Debug "Year: $year, Week: $week"
+Write-Output "Year: $year, Week: $week"
 
 $inputFilePath = "./watched_repos.json"
 $inputData = Get-Content -Path $inputFilePath -Raw | ConvertFrom-Json
@@ -49,10 +49,6 @@ foreach ($org in $inputData) {
         }
         $releaseUrls = $recentReleases | ForEach-Object { $_.html_url }
         $allReleases += $releaseUrls
-
-        Write-Output "    Pull Requests: $($allPullrequests.Count)"
-        Write-Output "    Issues: $($allIssues.Count)"
-        Write-Output "    Releases: $($allReleases.Count)"
     }
 }
 
