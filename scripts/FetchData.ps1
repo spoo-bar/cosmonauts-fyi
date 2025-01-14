@@ -58,6 +58,7 @@ $outputData = @{
     Releases = $allReleases
 }
 $outputJson = $outputData | ConvertTo-Json
+Write-Output "Pull requests: $($allPullrequests.Count), Issues: $($allIssues.Count), Releases: $($allReleases.Count)"
 
 # Ensure the output directory exists
 $outputDirectory = Split-Path -Path $outputFilePath -Parent
@@ -68,3 +69,4 @@ if (-not (Test-Path -Path $outputDirectory)) {
 Set-Content -Path $outputFilePath -Value $outputJson
 Write-Output "Successfully fetched data to $outputFilePath"
 
+git add $outputFilePath

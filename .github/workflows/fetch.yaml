@@ -3,6 +3,9 @@ name: Fetch
 on:
   workflow_dispatch: 
 
+permissions: 
+    pull-requests: write
+
 jobs:
   run-tests:
     name: Fetch data
@@ -11,13 +14,29 @@ jobs:
 
       - uses: actions/checkout@v4
       
+      - name: Create branch
+        run: |
+          current_year=$(date +"%Y")
+          current_week=$(date +"%V")
+          branch_name="year/$current_year/week/$current_week"
+          git checkout -b $branch_name
+          git push origin $branch_name
+
       - name: Execute Fetch Data Script
         env:
           BEARER_TOKEN: ${{ secrets.GITHUB_TOKEN}} 
         shell: pwsh
         run: |
           ./scripts/FetchData.ps1
-
-      - name: Output data
+          git commit -m "Fetching the week's pull requsts and issues and releases"
+          git push
+    
+      - name: Create pull request
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cat ./2025/03/data.json
+          current_year=$(date +"%Y")
+          current_week=$(date +"%V")
+          branch_name="year/$current_year/week/$current_week"
+          title="Year: $current_year Week: $current_week"
+          gh pr create --title $title --body 'Created by Github action 🤖' --assignee spoo-bar --base main --head $branch_name --draft
