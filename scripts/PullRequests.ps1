@@ -1,35 +1,34 @@
 $year = Get-Date -Format "yyyy"
 $week = Get-Date -UFormat "%V"
-Write-Debug "Year: $year, Week: $week"
+Write-Output "Year: $year, Week: $week"
+
 $inputFilePath = "./$year/$week/data.json"
-$outputFilePath = "./$year/$week/formatted_prs.json"
+$outputFilePath = "./formatted_prs.json"
+
+$bearerToken = $env:BEARER_TOKEN
+$headers = @{
+    "Accept" = "application/vnd.github+json"
+    "Authorization" = "Bearer $bearerToken"
+}
 
 $inputData = Get-Content -Path $inputFilePath -Raw | ConvertFrom-Json
 $formattedPRs = @()
 foreach ($url in $inputData.pull_requests) {
     if ($url -match "https://github.com/([^/]+)/([^/]+)/pull/(\d+)") {
-        $pr = Get-GitHubPullRequest -OwnerName $matches[1] -RepositoryName $matches[2] -PullRequest $matches[3]
-        Write-Debug "Processing PR: " 
-        Write-Debug $pr
-        $formattedPRs += ([PSCustomObject]@{
-            'URL' = $url
-            'Number' = $pr.number
-            'Organization' = $matches[1]
-            'Repository' = $matches[2]
-            'State' = $pr.state
-            'Title' = $pr.title
-            'Body' = $pr.body
-            'Created' = $pr.created_at
-            'Merged' = $pr.merged_at
-            'Labels' = $pr.labels.name -join ', '
-            'Draft' = $pr.draft
-            'Head' = $pr.head.label
-            'Base' = $pr.base.label
-            'IsMerged' = $pr.merged
-            'UserName' = $pr.user.login
-            'UserURL' = $pr.user.html_url
-            'UserAvatar' = $pr.user.avatar_url
-        })
+        $owner = $matches[1]
+        $repository = $matches[2]
+        $pullNumber = $matches[3]
+
+        $pullRequestUrl = "https://api.github.com/repos/$owner/$repository/pulls/$pullNumber"
+        $pullRequestResponse = Invoke-RestMethod -Uri $pullRequestUrl -Method Get -Headers $headers
+        $pullRequest = $pullRequestResponse | Select-Object -Property html_url, number, title, state, created_at, updated_at, body, user, merged, draft, head, base
+        $user = @{
+            login = $pullRequest.user.login
+            avatar_url = $pullRequest.user.avatar_url
+            html_url = $pullRequest.user.html_url
+        }
+        $pullRequest.user = $user
+        $formattedPRs += $pullRequest
     } else {
         Write-Warning "Invalid URL: $url"
     }

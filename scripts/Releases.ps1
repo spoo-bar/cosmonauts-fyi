@@ -1,32 +1,35 @@
 $year = Get-Date -Format "yyyy"
 $week = Get-Date -UFormat "%V"
-Write-Debug "Year: $year, Week: $week"
+Write-Output "Year: $year, Week: $week"
+
 $inputFilePath = "./$year/$week/data.json"
-$outputFilePath = "./$year/$week/formatted_releases.json"
+$outputFilePath = "./formatted_releases.json"
+
+$bearerToken = $env:BEARER_TOKEN
+$headers = @{
+    "Accept" = "application/vnd.github+json"
+    "Authorization" = "Bearer $bearerToken"
+}
 
 $inputData = Get-Content -Path $inputFilePath -Raw | ConvertFrom-Json
 $formattedReleases = @()
 foreach ($url in $inputData.releases) {
     if ($url -match "https://github.com/([^/]+)/([^/]+)/releases/tag/([^/]+)") {
-       $release = Get-GitHubRelease -OwnerName $matches[1] -RepositoryName $matches[2] -Tag $matches[3]
-        Write-Debug "Processing Release: " 
-        Write-Debug $release
-        $formattedReleases += ([PSCustomObject]@{
-            'URL' = $release.html_url
-            'Organization' = $matches[1]
-            'Repository' = $matches[2]
-            'TagName' = $release.tag_name
-            'Name' = $release.name
-            'Draft' = $release.draft
-            'Prerelease' = $release.prerelease
-            'CreatedAt' = $release.created_at
-            'PublishedAt' = $release.published_at
-            'Assets' = $release.assets.browser_download_url -Join ', '
-            'Body' = $release.body
-            'AuthorName' = $release.author.UserName
-            'AuthorAvatar' = $release.author.avatar_url
-            'AuthorType' = $release.author.type
-        })
+        $ownerName = $matches[1]
+        $repositoryName = $matches[2]
+        $tagName = $matches[3]
+
+        $releasesUrl = "https://api.github.com/repos/$ownerName/$repositoryName/releases/tags/$tagName"
+        $releaseResponse = Invoke-RestMethod -Uri $releasesUrl -Method Get -Headers $headers
+        $release = $releaseResponse | Select-Object -Property html_url, tag_name, name, draft, prerelease, created_at, published_at, body, author
+        $author = @{
+            login = $release.author.login
+            avatar_url = $release.author.avatar_url
+            html_url = $release.author.html_url
+        }
+        $release.author = $author
+        $formattedReleases += $release
+
     } else {
         Write-Warning "Invalid URL: $url"
     }
