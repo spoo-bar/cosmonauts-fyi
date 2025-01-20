@@ -20,10 +20,6 @@
         "About": ""
       },
       {
-        "Name": "chain-registry",
-        "About": ""
-      },
-      {
         "Name": "cosmos-sdk",
         "About": ""
       },
@@ -228,15 +224,6 @@
     "Repositories": [
       {
         "Name": "python-iavl",
-        "About": ""
-      }
-    ]
-  },
-  {
-    "Organisation": "apalache-mc",
-    "Repositories": [
-      {
-        "Name": "apalache",
         "About": ""
       }
     ]

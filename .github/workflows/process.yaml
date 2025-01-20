@@ -1,0 +1,73 @@
+name: Process
+
+on:
+  workflow_dispatch: 
+  push: 
+    branches:
+      - main
+
+jobs:
+  process-releases:
+    name: Process Releases
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Execute process releases script
+        env:
+          BEARER_TOKEN: ${{ secrets.GITHUB_TOKEN}} 
+        shell: pwsh
+        run: |
+          ./scripts/Releases.ps1
+    
+      - name: Upload formatted releases
+        uses: actions/upload-artifact@v2
+        with:
+          name: releases.json
+          path: formatted_releases.json
+          if-no-files-found: error
+          retention-days: 1
+
+  process-issues:
+    name: Process Issues
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v4
+
+        - name: Execute process issues script
+          env:
+            BEARER_TOKEN: ${{ secrets.GITHUB_TOKEN}} 
+          shell: pwsh
+          run: |
+            ./scripts/Issues.ps1
+
+        - name: Upload formatted issues
+          uses: actions/upload-artifact@v2
+          with:
+            name: issues.json
+            path: formatted_issues.json
+            if-no-files-found: error
+            retention-days: 1
+
+  process-pullrequests:
+    name: Process Pull Requests
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v4
+
+        - name: Execute process pull requests script
+          env:
+            BEARER_TOKEN: ${{ secrets.GITHUB_TOKEN}} 
+          shell: pwsh
+          run: |
+            ./scripts/PullRequests.ps1
+
+        - name: Upload formatted pull requests
+          uses: actions/upload-artifact@v2
+          with:
+            name: pullrequests.json
+            path: formatted_pullrequests.json
+            if-no-files-found: error
+            retention-days: 1
+
+

@@ -1,32 +1,34 @@
 $year = Get-Date -Format "yyyy"
 $week = Get-Date -UFormat "%V"
-Write-Debug "Year: $year, Week: $week"
+Write-Output "Year: $year, Week: $week"
+
 $inputFilePath = "./$year/$week/data.json"
-$outputFilePath = "./$year/$week/formatted_issues.json"
+$outputFilePath = "./formatted_issues.json"
+
+$bearerToken = $env:BEARER_TOKEN
+$headers = @{
+    "Accept" = "application/vnd.github+json"
+    "Authorization" = "Bearer $bearerToken"
+}
 
 $inputData = Get-Content -Path $inputFilePath -Raw | ConvertFrom-Json
 $formattedIssues = @()
 foreach ($url in $inputData.issues) {
     if ($url -match "https://github.com/([^/]+)/([^/]+)/issues/(\d+)") {
-        $issue = Get-GitHubIssue -OwnerName $matches[1] -RepositoryName $matches[2] -Issue $matches[3]
-        Write-Debug "Processing Issues: " 
-        Write-Debug $issue
-        $formattedIssues += ([PSCustomObject]@{
-            'URL' = $issue.html_url
-            'Organization' = $matches[1]
-            'Repository' = $matches[2]
-            'Number' = $issue.number
-            'Title' = $issue.title
-            'State' = $issue.state
-            'Locked' = $issue.locked
-            'CreatedAt' = $issue.created_at
-            'ClosedAt' = $issue.closed_at
-            'Body' = $issue.Body
-            'User' = $issue.user.UserName
-            'UserAvatar' = $issue.user.avatar_url
-            'UserType' = $issue.user.type
-            'Labels' = $issue.labels.LabelName -join ', '
-        })
+        $ownerName = $matches[1]
+        $repositoryName = $matches[2]
+        $issueNumber = $matches[3]
+
+        $issuesUrl = "https://api.github.com/repos/$ownerName/$repositoryName/issues/$issueNumber"
+        $issueResponse = Invoke-RestMethod -Uri $issuesUrl -Method Get -Headers $headers
+        $issue = $issueResponse | Select-Object -Property html_url, number, title, state, locked, created_at, closed_at, body, user, labels
+        $user = @{
+            login = $issue.user.login
+            avatar_url = $issue.user.avatar_url
+            html_url = $issue.user.type
+        }
+        $issue.user = $user
+        $formattedIssues += $issue
     } else {
         Write-Warning "Invalid URL: $url"
     }
