@@ -66,7 +66,7 @@ jobs:
           uses: actions/upload-artifact@v4
           with:
             name: pullrequests.json
-            path: formatted_pullrequests.json
+            path: formatted_prs.json
             if-no-files-found: error
             retention-days: 1
 
