@@ -21,7 +21,7 @@ jobs:
           ./scripts/Releases.ps1
     
       - name: Upload formatted releases
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: releases.json
           path: formatted_releases.json
@@ -42,7 +42,7 @@ jobs:
             ./scripts/Issues.ps1
 
         - name: Upload formatted issues
-          uses: actions/upload-artifact@v2
+          uses: actions/upload-artifact@v4
           with:
             name: issues.json
             path: formatted_issues.json
@@ -63,7 +63,7 @@ jobs:
             ./scripts/PullRequests.ps1
 
         - name: Upload formatted pull requests
-          uses: actions/upload-artifact@v2
+          uses: actions/upload-artifact@v4
           with:
             name: pullrequests.json
             path: formatted_pullrequests.json
